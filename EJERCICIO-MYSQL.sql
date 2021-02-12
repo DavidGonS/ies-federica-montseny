@@ -81,6 +81,66 @@ CREATE TABLE pub_empleado(
     ALTER TABLE employees
     ADD edad INT;
     
-    /*4.	Añade las claves primarias de las tablas EXISTENCIAS, LOCALIDAD Y PUB_EMPLEADO.*/
+    /*4.Añade las claves primarias de las tablas EXISTENCIAS, LOCALIDAD Y PUB_EMPLEADO.*/
+    
+    /*5.Añade las siguientes restricciones:*/
+    ALTER TABLE pub
+    ADD 
+    
+    /*7. Crea las siguientes claves ajenas a las tablas ya existentes:*/
+    ALTER TABLE owners
+    ADD CONSTRAINT fk_cod_pub_own
+    FOREIGN KEY (cod_pub) REFERENCES pubs (cod_pub);
+    
+    ALTER TABLE pub_employees
+    ADD CONSTRAINT fk_cod_pub_emp
+    FOREIGN KEY (cod_pub) REFERENCES pubs (cod_pub);
+    
+    ALTER TABLE pub_employees
+    ADD CONSTRAINT fk_cod_pub_emp
+    FOREIGN KEY (dni_employee) REFERENCES pubs (dni_employee);
+    
+    ALTER TABLE stocks
+    ADD CONSTRAINT fk_cod_pub_sto
+    FOREIGN KEY (cod_pub) REFERENCES pubs (cod_pub);
+    
+    ALTER TABLE pubs
+    ADD CONSTRAINT fk_cod_cit_pub
+    FOREIGN KEY (cod_city) REFERENCES pubs (cod_city);
+    
+    /*8. Eliminar las claves ajenas creadas en el ejercicio anterior.*/
+    
+    ALTER TABLE pub_employees
+    DROP FOREIGN KEY fk_cod_pub_emp
+    
+    
+    /*9*/
+    DROP TABLE owners;
+    
+    DROP TABLE stocks;
+    
+    DROP TABLE pub_employees;
+    
+    CREATE TABLE IF NOT EXISTS owners(
+    dni_titular VARCHAR(9) PRIMARY KEY,
+    nombre VARCHAR(10),
+	domicilio VARCHAR(20),
+    cod_pub INT NOT NULL,
+    FOREIGN KEY (cod_pub) REFERENCES pubs(cod_pub)
+    );
+    
+    SHOW CREATE TABLE owners;
+    
+    CREATE TABLE IF NOT EXISTS pub_employees(
+    cod_pub INT NOT NULL,
+    dni_empleado VARCHAR(10) NOT NULL,
+	funcion VARCHAR(20) NOT NULL,
+    PRIMARY KEY (cod_pub, dni_empleado, funcion),
+    CONSTRAINT FK_pubs
+    PRIMARY KEY (cod_pub) REFERENCES pubs (cod_pub),
+    CONSTRAINT FK_employees
+    PRIMARY KEY (dni_empleado) REFERENCES (dni_empleado)
+    );
+    
     
     
